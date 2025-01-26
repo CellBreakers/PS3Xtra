@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PS3Patch Master</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin: 20px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid #555;
+            border-radius: 10px;
+            background-color: #333;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00509e;
+        }
+        input[type="text"] {
+            font-size: 16px;
+            padding: 5px;
+            width: calc(100% - 20px);
+            margin: 10px 0;
+            border: 1px solid #555;
+            border-radius: 5px;
+        }
+        .file-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .file-list a {
+            color: #4caf50;
+            text-decoration: none;
+        }
+        .file-list a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PS3Patch Master</h1>
+        <p>Enter the GitHub repo URL to view .pkg files:</p>
+        <input type="text" id="repo_url" placeholder="Enter GitHub Repo URL">
+        <br>
+        <button onclick="fetchPKGFiles()">Fetch .pkg Files</button>
+        <div class="file-list" id="file_list">
+            <!-- Files will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        async function fetchPKGFiles() {
+            const repoUrl = document.getElementById("repo_url").value.trim();
+
+            if (!repoUrl) {
+                alert("Please enter a GitHub repository URL.");
+                return;
+            }
+
+            // Extract the owner and repo name from the URL
+            const match = repoUrl.match(/github\\.com\\/(.+?)\\/(.+?)(\\/.+)?$/);
+            if (!match) {
+                alert("Invalid GitHub repository URL.");
+                return;
+            }
+
+            const owner = match[1];
+            const repo = match[2];
+
+            const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/`;
+
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+
+                const files = await response.json();
+                const fileListDiv = document.getElementById("file_list");
+                fileListDiv.innerHTML = "<h3>.pkg Files in Repository:</h3>";
+
+                let hasPKGFiles = false;
+
+                if (Array.isArray(files)) {
+                    files.forEach(file => {
+                        if (file.type === "file" && file.name.endsWith(".pkg")) {
+                            hasPKGFiles = true;
+                            fileListDiv.innerHTML += `<p><a href="${file.download_url}" target="_blank">${file.name}</a></p>`;
+                        }
+                    });
+                }
+
+                if (!hasPKGFiles) {
+                    fileListDiv.innerHTML += "<p>No .pkg files found in this repository.</p>";
+                }
+            } catch (error) {
+                alert("Failed to fetch files. Please ensure the repository is public and try again.");
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
+
