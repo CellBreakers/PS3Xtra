@@ -101,35 +101,6 @@
             width: 100%;
         }
     </style>
-    <script>
-        function applyFilters(event) {
-            event.preventDefault();
-            // Here you can add logic to filter homebrew items based on user input
-            alert('Filters applied!'); // Placeholder for filter application logic
-        }
-
-        // Function to redirect to a developer's page based on developer selection
-        function redirectToDeveloperPage(devId) {
-            const devPages = {
-                dev1: 'DeVil303ProfileStats.html',
-                dev2: 'AldoVargasProfileStats.html',
-                dev3: 'DeankProfileStats.html',
-                dev4: 'BucaneroProfileStats.html',
-                dev5: 'RebugTeamProfileStats.html',
-                dev10: 'RogeroProfileStats.html',
-                dev11: 'EvilNatProfileStats.html',
-                dev28: 'HabibProfileStats.html',
-                dev50: 'KozarovvProfileStats.html',
-                dev59: '3141CardProfileStats.html',
-                dev60: 'Joonie86ProfileStats.html'
-            };
-            if (devPages[devId]) {
-                window.location.href = devPages[devId]; // Redirect to the developer's page
-            } else {
-                alert('Developer page not found!');
-            }
-        }
-    </script>
 </head>
 <body>
     <header>
@@ -140,26 +111,6 @@
             </ul>
         </nav>
     </header>
-
-    <div class="filter-bar">
-        <div class="filter-group">
-            <label for="developer">Developer:</label>
-            <select id="developer" onchange="redirectToDeveloperPage(this.value)">
-                <option value="">Any</option>
-                <option value="dev1">DeVil303</option>
-                <option value="dev2">Aldo's Tools</option>
-                <option value="dev3">Deank</option>
-                <option value="dev4">Bucanero</option>
-                <option value="dev5">Rebug Team</option>
-                <option value="dev10">Rogero</option>
-                <option value="dev11">EvilNat</option>
-                <option value="dev28">Habib</option>
-                <option value="dev50">Kozarovv</option>
-                <option value="dev59">3141Card</option>
-                <option value="dev60">Joonie86</option>
-            </select>
-        </div>
-        </div>
     </div>
 
     <main>
@@ -215,7 +166,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 CellBreakers. All rights reserved.</p>
+        <p>&copy; 2025 CellBreakers. All rights reserved.</p>
     </footer>
 </body>
 </html>
