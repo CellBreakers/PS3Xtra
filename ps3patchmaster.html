@@ -15,10 +15,23 @@
             margin: 20px auto;
             padding: 20px;
             width: 90%;
-            max-width: 400px;
+            max-width: 600px;
             border: 1px solid #555;
             border-radius: 10px;
             background-color: #333;
+        }
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .game-box {
+            background-color: #444;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            width: 45%;
+            min-width: 120px;
         }
         button {
             font-size: 18px;
@@ -33,43 +46,65 @@
         button:hover {
             background-color: #00509e;
         }
-        input[type="text"] {
+        input {
             font-size: 16px;
             padding: 5px;
-            width: calc(100% - 20px);
+            width: 80%;
             margin: 10px 0;
             border: 1px solid #555;
             border-radius: 5px;
         }
+        a {
+            color: #00ccff;
+            text-decoration: none;
+        }
     </style>
 </head>
-<body>
+<body onload="loadLicenses()">
     <div class="container">
         <h1>PS3Patch Master</h1>
         <p>Enter the Game ID to download the license:</p>
-        <input type="text" id="game_id" placeholder="Enter Game ID (e.g., BLUS12345)">
+        <input type="text" id="game_id" placeholder="Enter Game ID (e.g., BLES01807)">
         <br>
         <button onclick="downloadLicense()">Download License</button>
-        <p>Ensure your PS3 is configured to access this page.</p>
-        <p>If you want to use alternative, click below</p>
+        <p>Available Licenses:</p>
+        <div class="grid" id="licenseGrid"></div>
+        <p>If you want to use an alternative, click below:</p>
         <a href="https://store.brewology.com/get/homebrew.php?id=126&fid=1688">Download ReActPSN For PS3</a>
     </div>
 
     <script>
         function downloadLicense() {
-            var game_id = document.getElementById("game_id").value.trim();
-
-            // Construct the URL for the license file in your GitHub repository
-            var base_url = "https://raw.githubusercontent.com/CellBreakers/PS3PatchMasterLicenses/main/";
-            var license_url = base_url + game_id + ".rap";
-
-            // Check if the game ID is entered
-            if (game_id) {
-                // Redirect to the constructed URL
-                window.location.href = license_url;
+            var game_id = document.getElementById("game_id").value.trim().toUpperCase();
+            if (/^(BLES|BLUS)\d{5}$/.test(game_id)) {
+                window.location.href = `https://raw.githubusercontent.com/CellBreakers/PS3PatchMasterLicenses/main/${game_id}.rap`;
             } else {
-                alert("Please enter a valid Game ID.");
+                alert("Please enter a valid Game ID (e.g., BLES01807).\nMake sure JavaScript is enabled on your PS3 browser.");
             }
+        }
+
+        function loadLicenses() {
+            var repoURL = "https://api.github.com/repos/CellBreakers/PS3PatchMasterLicenses/contents/";
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", repoURL, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    var grid = document.getElementById("licenseGrid");
+                    grid.innerHTML = "";
+                    data.forEach(function(file) {
+                        if (file.name.endsWith(".rap")) {
+                            var gameID = file.name.replace(".rap", "");
+                            var div = document.createElement("div");
+                            div.className = "game-box";
+                            div.innerHTML = `<strong>${gameID}</strong><br>
+                                             <a href="${file.download_url}">Download License</a>`;
+                            grid.appendChild(div);
+                        }
+                    });
+                }
+            };
+            xhr.send();
         }
     </script>
 </body>
