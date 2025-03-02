@@ -3,171 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PS3 Firmware Compatibility Checker</title>
+    <title>PS3 CFW Compatibility Checker</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: #ecf0f1;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: Arial, sans-serif;
+            padding: 20px;
         }
-        .container {
-            background: #1abc9c;
-            border-radius: 10px;
-            padding: 30px;
-            width: 100%;
-            max-width: 450px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        h1 {
-            text-align: center;
-            color: #ecf0f1;
-            margin-bottom: 20px;
-            font-size: 2em;
-            font-weight: bold;
-        }
-        label {
-            font-size: 1.1em;
-            color: #ecf0f1;
-            display: block;
-            margin-bottom: 8px;
-        }
-        input {
-            width: 100%;
+        input, select, button {
             padding: 10px;
-            font-size: 1em;
-            border: none;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            box-sizing: border-box;
+            margin: 10px;
         }
-        input:focus {
-            outline: none;
-            border: 2px solid #4CAF50;
-            background-color: #ecf0f1;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            font-size: 1.1em;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 1.2em;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-            transition: opacity 0.5s ease;
-        }
-        .compatible {
-            background-color: #dff0d8;
-            color: #3c763d;
-        }
-        .not-compatible {
-            background-color: #f2dede;
-            color: #a94442;
-        }
-        .message {
-            font-size: 1em;
-            color: #ecf0f1;
-            margin-top: 10px;
-            text-align: center;
-        }
-        .suggestion {
-            font-size: 1.1em;
-            color: #4CAF50;
+        #result {
             font-weight: bold;
+            margin-top: 20px;
+        }
+        .checkmark {
+            color: green;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>PS3 Firmware Compatibility Checker</h1>
-        <form id="firmwareForm">
-            <label for="ps3Firmware">Enter your PS3 Firmware Version (e.g., 4.88):</label>
-            <input type="text" id="ps3Firmware" name="ps3Firmware" required placeholder="e.g., 4.88">
-            <button type="submit">Check Compatibility</button>
-        </form>
-        <div id="compatibilityResult" class="result"></div>
-        <div id="suggestionMessage" class="message"></div>
-    </div>
+    <h1>PS3 CFW Compatibility Checker</h1>
+
+    <label for="ps3Version">Enter your PS3's OFW version:</label>
+    <input type="text" id="ps3Version" placeholder="e.g., 4.90" />
+
+    <label for="ps3Chip">Select your PS3's Chip (NOR/NAND):</label>
+    <select id="ps3Chip">
+        <option value="nor">NOR</option>
+        <option value="nand">NAND</option>
+    </select>
+
+    <button onclick="checkCompatibility()">Check Compatibility</button>
+
+    <div id="result"></div>
 
     <script>
-        document.getElementById('firmwareForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var firmware = document.getElementById('ps3Firmware').value.trim();
-            var compatibilityResult = document.getElementById('compatibilityResult');
-            var suggestionMessage = document.getElementById('suggestionMessage');
+        function checkCompatibility() {
+            var version = document.getElementById('ps3Version').value;
+            var chip = document.getElementById('ps3Chip').value;
+            var resultText = '';
+            var checkmark = '❌';  // Default is not compatible
 
-            // List of all PS3 Official Firmware versions starting from 4.88 upwards (this list is automatically handled)
-            var startingFirmware = 4.88;
-            var latestFirmware = 4.91;  // Replace this with the latest known firmware if you need to change it dynamically
-
-            // Generate the list of PS3 Official Firmware versions dynamically
-            var allFirmwares = [];
-            for (var i = startingFirmware; i <= latestFirmware; i++) {
-                allFirmwares.push(i.toFixed(2));
-            }
-
-            // List of compatible HEN, HFW, and CFW versions (examples)
-            var compatibleFirmwares = [
-                // HEN Versions
-                "4.88 HEN", "4.87 HEN", "4.86 HEN", "4.85 HEN", "4.84 HEN", "4.83 HEN", 
-                "4.82 HEN", "4.81 HEN", "4.80 HEN", "4.78 HEN", "4.75 HEN", "4.70 HEN", 
-
-                // HFW Versions
-                "4.88 HFW", "4.87 HFW", "4.86 HFW", "4.85 HFW", "4.84 HFW", "4.83 HFW", 
-                "4.82 HFW", "4.81 HFW", "4.80 HFW", "4.78 HFW", "4.75 HFW", "4.70 HFW", 
-
-                // CFW Versions
-                "4.88 CFW", "4.87 CFW", "4.86 CFW", "4.85 CFW", "4.84 CFW", "4.83 CFW", 
-                "4.82 CFW", "4.81 CFW", "4.80 CFW", "4.78 CFW", "4.75 CFW", "4.70 CFW"
-            ];
-
-            // Clear previous result
-            compatibilityResult.style.display = "none";
-            compatibilityResult.classList.remove('compatible', 'not-compatible');
-            compatibilityResult.innerHTML = "";
-            suggestionMessage.innerHTML = "";
-
-            if (firmware === "") {
-                compatibilityResult.innerHTML = "Please enter a valid firmware version!";
-                compatibilityResult.classList.add('not-compatible');
-                compatibilityResult.style.display = "block";
-            } else if (allFirmwares.includes(firmware)) {
-                // Check for compatibility with HEN, HFW, and CFW
-                if (compatibleFirmwares.includes(firmware)) {
-                    compatibilityResult.innerHTML = "Your console is compatible with the selected HEN, HFW, or CFW version!";
-                    compatibilityResult.classList.add('compatible');
-                    suggestionMessage.innerHTML = "Please continue with the installation of your selected firmware version.";
-                    suggestionMessage.classList.add('suggestion');
-                } else {
-                    compatibilityResult.innerHTML = "Your console is not compatible with the selected firmware version!";
-                    compatibilityResult.classList.add('not-compatible');
-                    suggestionMessage.innerHTML = "We suggest you update your PS3 to a compatible firmware version.";
-                }
-                compatibilityResult.style.display = "block";
+            // Check if version is provided
+            if (version === '') {
+                resultText = 'Please enter a valid PS3 OFW version.';
             } else {
-                compatibilityResult.innerHTML = "The firmware version you entered is not recognized. Please check your entry!";
-                compatibilityResult.classList.add('not-compatible');
-                compatibilityResult.style.display = "block";
+                // Convert version to float for comparison
+                var versionNum = parseFloat(version);
+
+                // Check compatibility based on chip type and version
+                if (chip === 'nor' && versionNum >= 4.82 && versionNum <= 4.89) {
+                    checkmark = '✔️'; // NOR chip is compatible with PS3HEN
+                    resultText = 'Your PS3 (NOR) is compatible with PS3HEN!';
+                } else if (chip === 'nand' && versionNum >= 4.82 && versionNum <= 4.89) {
+                    checkmark = '✔️'; // NAND chip is compatible with PS3HEN
+                    resultText = 'Your PS3 (NAND) is compatible with PS3HEN!';
+                } else if (versionNum === 4.90 || versionNum === 4.91) {
+                    checkmark = '✔️'; // Newer versions work with PS3HEN, and sometimes CFW
+                    resultText = 'Your PS3 is compatible with PS3HEN and CFW!';
+                } else {
+                    checkmark = '❌'; // Incompatible version
+                    resultText = 'Your PS3 is not compatible with PS3HEN or CFW (for now).';
+                }
             }
-        });
+
+            // Display the result with checkmark
+            document.getElementById('result').innerHTML = resultText + " " + checkmark;
+        }
     </script>
 </body>
 </html>
