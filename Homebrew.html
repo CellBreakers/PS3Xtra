@@ -101,35 +101,6 @@
             width: 100%;
         }
     </style>
-    <script>
-        function applyFilters(event) {
-            event.preventDefault();
-            // Here you can add logic to filter homebrew items based on user input
-            alert('Filters applied!'); // Placeholder for filter application logic
-        }
-
-        // Function to redirect to a developer's page based on developer selection
-        function redirectToDeveloperPage(devId) {
-            const devPages = {
-                dev1: 'DeVil303ProfileStats.html',
-                dev2: 'AldoVargasProfileStats.html',
-                dev3: 'DeankProfileStats.html',
-                dev4: 'BucaneroProfileStats.html',
-                dev5: 'RebugTeamProfileStats.html',
-                dev10: 'RogeroProfileStats.html',
-                dev11: 'EvilNatProfileStats.html',
-                dev28: 'HabibProfileStats.html',
-                dev50: 'KozarovvProfileStats.html',
-                dev59: '3141CardProfileStats.html',
-                dev60: 'Joonie86ProfileStats.html'
-            };
-            if (devPages[devId]) {
-                window.location.href = devPages[devId]; // Redirect to the developer's page
-            } else {
-                alert('Developer page not found!');
-            }
-        }
-    </script>
 </head>
 <body>
     <header>
@@ -140,25 +111,6 @@
             </ul>
         </nav>
     </header>
-
-    <div class="filter-bar">
-        <div class="filter-group">
-            <label for="developer">Developer:</label>
-            <select id="developer" onchange="redirectToDeveloperPage(this.value)">
-                <option value="">Any</option>
-                <option value="dev1">DeVil303</option>
-                <option value="dev2">Aldo's Tools</option>
-                <option value="dev3">Deank</option>
-                <option value="dev4">Bucanero</option>
-                <option value="dev5">Rebug Team</option>
-                <option value="dev10">Rogero</option>
-                <option value="dev11">EvilNat</option>
-                <option value="dev28">Habib</option>
-                <option value="dev50">Kozarovv</option>
-                <option value="dev59">3141Card</option>
-                <option value="dev60">Joonie86</option>
-            </select>
-        </div>
         </div>
     </div>
 
@@ -214,7 +166,7 @@
                 </div>
             </a>
 			
-			<!-- IrisMAN -->
+			<!-- UltimateToolbox -->
 			<a href="https://github.com/aldostools/Resources/releases/download/XMB_Randomizers/Ultimate_Toolbox_for_4.89-4.91_BETA.pkg" download="ULTTOOLBOXBETA.zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
                 <div class="homebrew-info">
                     <h3>Ultimate Toolbox (4.89-4.91)</h3>
@@ -222,7 +174,71 @@
                 </div>
             </a>
 			
-			<!-- IrisMAN -->
+			<!-- ManaGuZ [Nightly-Release] -->
+			<a href="https://github.com/aldostools/Resources/releases/download/XMB_Randomizers/Ultimate_Toolbox_for_4.89-4.91_BETA.pkg" download="ManaGunz.zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
+                <div class="homebrew-info">
+                    <h3>ManaGuZ [Nightly-Release]</h3>
+                    <p>This is another Backup Manager made from the ground. It allows you to mount a backup stored in your USB device or in the internal hdd as a virtual Blue-Ray using 4 differents UI : "List", "Grid", "XMB" and "Flow".</p>
+                </div>
+            </a>
+			
+			<!-- File Manager [Nightly-Release] -->
+			<a href="https://github.com/aldostools/Resources/releases/download/XMB_Randomizers/Ultimate_Toolbox_for_4.89-4.91_BETA.pkg" download="FileManager.zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
+                <div class="homebrew-info">
+                    <h3>File Manager [Nightly-Release]</h3>
+                    <p>Description Coming SOON!</p>
+                </div>
+            </a>
+			
+			<!-- PKGi -->
+			<a href="https://github.com/aldostools/Resources/releases/download/XMB_Randomizers/Ultimate_Toolbox_for_4.89-4.91_BETA.pkg" download="PKGi.zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
+                <div class="homebrew-info">
+                    <h3>PKGi</h3>
+                    <p>PKGi PS3 is a PlayStation 3 port of PSVita pkgi.</p>
+                </div>
+            </a>
+			
+			<!-- PS3UNLCKHDDSPC -->
+			<a href="https://github.com/aldostools/Resources/releases/download/XMB_Randomizers/Ultimate_Toolbox_for_4.89-4.91_BETA.pkg" download="PS3UnlockHDDSpace.zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
+                <div class="homebrew-info">
+                    <h3>PS3 Unlock HDD Space</h3>
+                    <p>This tool by 3141card unlocks up to 8% extra of the total space on the internal HDD of the PS3. Run it again to restore the original settings if necessary.</p>
+                </div>
+            </a>
+			
+			<!-- PSNPatch -->
+			<a href="https://github.com/aldostools/Resources/releases/download/XMB_Randomizers/Ultimate_Toolbox_for_4.89-4.91_BETA.pkg" download="PSNPatch.zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
+                <div class="homebrew-info">
+                    <h3>PSN Patch</h3>
+                    <p>This is a small app made by KW and inspired in the works of stoker25 (psidpatch) and user (psnope).</p>
+                </div>
+            </a>
+			
+			<!-- ReActPSN -->
+			<a href="https://github.com/aldostools/Resources/releases/download/XMB_Randomizers/Ultimate_Toolbox_for_4.89-4.91_BETA.pkg" download="ReActPSN.zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
+                <div class="homebrew-info">
+                    <h3>ReActPSN</h3>
+                    <p>reActPSN is a backup launcher and OFFLINE PSN license generator. This tool lets you backup and restore the licenses of your games without any private information. It can fix selfs and edats, and convert PS2 isos to PS2 Classics.</p>
+                </div>
+            </a>
+			
+			<!-- RebugToolbox -->
+			<a href="https://github.com/aldostools/Resources/releases/download/XMB_Randomizers/Ultimate_Toolbox_for_4.89-4.91_BETA.pkg" download="RebugToolbox.zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
+                <div class="homebrew-info">
+                    <h3>Rebug Toolbox</h3>
+                    <p>Rebug Toolbox is an application designed to complete the full function of REBUG REX EDITION</p>
+                </div>
+            </a>
+			
+			<!-- prepISO (NTFS/exFAT) -->
+			<a href="https://github.com/aldostools/Resources/releases/download/XMB_Randomizers/Ultimate_Toolbox_for_4.89-4.91_BETA.pkg" download="prepISO (NTFS/exFAT).zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
+                <div class="homebrew-info">
+                    <h3>prepISO (NTFS/exFAT)</h3>
+                    <p>Description Coming SOON!</p>
+                </div>
+            </a>
+			
+			<!-- ApolloSaveTool -->
             <a href="https://store.brewology.com/get/homebrew.php?id=321&fid=2399" download="ApolloSaveTool.zip" class="homebrew-card" style="text-decoration: none; color: inherit;">
                 <div class="homebrew-info">
                     <h3>Apollo Save Tool</h3>
