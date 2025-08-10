@@ -1,112 +1,142 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PS3 Firmware List</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000000; /* Black background */
-            color: white;
-            text-align: center;
-            position: relative;
-        }
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/gif;base64,R0lGODdhGgAaAIAAAAAAAAAAACH5BAEAAAEALAAAAAAaABoAAAJChI+py+0Po5y02ouz3rz7D4biSJbmWJxC9qos1Yu93oTbAr4SADs=') repeat;
-            background-size: cover;
-            opacity: 0.2; /* Make the pattern subtle */
-            z-index: -1;
-        }
-        .container {
-            width: 90%;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 15px;
-            background-color: rgba(51, 51, 51, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-        h1 {
-            font-size: 24px;
-            color: #ffcc00;
-        }
-        .important {
-            font-size: 16px;
-            font-weight: bold;
-            color: #ff4444;
-            margin-bottom: 15px;
-        }
-        .dropdown {
-            margin: 10px 0;
-            position: relative;
-            display: inline-block;
-        }
-        .dropbtn {
-            background-color: #444;
-            color: white;
-            padding: 10px 15px;
-            font-size: 18px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(51, 51, 51, 0.9);
-            min-width: 160px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            z-index: 1;
-        }
-        .dropdown-content a {
-            color: white;
-            padding: 10px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #575757;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>PS3 Firmware Versions</h1>
-        <p class="important">YOU NEED TO MAKE A FOLDER "PS3" ON THE ROOT OF YOUR USB DRIVE, THEN IN THAT FOLDER MAKE ANOTHER FOLDER CALLED "UPDATE" AND CHOOSE A USB AS A DOWNLOAD LOCATION!</p>
-        <div class="dropdown">
-            <button class="dropbtn">Custom Firmware (CFW)</button>
-            <div class="dropdown-content">
-                <a href="#">4.90.1 Evilnat</a>
-                <a href="#">4.89.2 Evilnat</a>
-                <a href="#">4.88.3 Evilnat</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Hybrid Firmware (HFW)</button>
-            <div class="dropdown-content">
-                <a href="https://www.mediafire.com/file/csx1k9a9lys5z5z/PS3UPDAT.PUP/file">4.91 HFW</a>
-                <a href="https://www.mediafire.com/file/6o144hkchi6kxhd/PS3UPDAT.PUP/file">4.90 HFW</a>
-                <a href="https://www.mediafire.com/file/9ztn5z39alackam/PS3UPDAT.PUP/file">4.89 HFW</a>
-                <a href="https://www.mediafire.com/file/e1bkvtd54mw1hc6/PS3UPDAT.PUP/file">4.88 HFW</a>
-                <a href="https://www.mediafire.com/file/7mtaf8dno2vczbe/PS3UPDAT.PUP/file">4.87 HFW</a>
-                <a href="https://www.mediafire.com/file/a0lpc6sev5ninda/PS3UPDAT.PUP/file">4.86 HFW</a>
-                <a href="https://www.mediafire.com/file/6lq4w0crnhnj9w2/PS3UPDAT.PUP/file">4.85 HFW</a>
-                <a href="https://www.mediafire.com/file/nih340mav9y8zuw/PS3UPDAT.PUP/file">4.84 HFW</a>
-                <a href="https://www.mediafire.com/file/dt9rvc46pdji9l6/PS3UPDAT.PUP/file">4.83 HFW</a>
-            </div>
-        </div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #000000;
+        color: white;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 10px;
+        background-color: #222222;
+        border: 1px solid #444444;
+    }
+
+    h1 {
+        font-size: 22px;
+        color: #ffcc00;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        font-size: 18px;
+        color: #ffcc00;
+        margin: 20px 0 10px;
+    }
+
+    .important {
+        font-size: 14px;
+        font-weight: bold;
+        color: #ff4444;
+        margin: 10px 0 20px;
+    }
+
+    hr {
+        border: 1px solid #555555;
+        margin: 25px 0;
+    }
+
+    .dropdown {
+        margin: 10px 0;
+        display: inline-block;
+    }
+
+    .dropbtn {
+        background-color: #444444;
+        color: white;
+        padding: 8px 12px;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #333333;
+        border: 1px solid #555555;
+        width: 160px;
+        text-align: left;
+    }
+
+    .dropdown-content a {
+        display: block;
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #444444;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>
+
+<div class="container">
+    <h1>PS3 Firmware Versions</h1>
+    <p class="important">YOU NEED TO MAKE A FOLDER "PS3" ON THE ROOT OF YOUR USB DRIVE, THEN IN THAT FOLDER MAKE ANOTHER FOLDER CALLED "UPDATE" AND CHOOSE A USB AS A DOWNLOAD LOCATION!</p>
+
+    <!-- CFW Section -->
+    <hr style="border: 1px solid #555; margin: 30px 0;">
+    <h2 style="color:#ffcc00;">Custom Firmware (CFW) (IN PROGRESS)</h2>
+    <div class="dropdown">
+        <button class="dropbtn">Select CFW Type</button>
+        <div class="dropdown-content">
+            <!--- a href="EvilNatFW.html">EvilNat</a> ---->
+            <!--- <a href="RebugFW.html">Rebug</a> ---->
+            <!--- <a href="FerroxFW.html">Ferrox</a> ---->
+            <!--- <a href="HabibFW.html">Habib</a> ---->
+            <!--- <a href="DarknetFW.html">Darknet</a> ---->
+            <!--- <a href="PastaFW.html">PastaCFW</a> ---->
+            <!--- <a href="OverflowFW.html">Overflow</a> ---->
+            <!---  <a href="PlayerKP420FW.html">PLAYERKP420</a> ---->
+            <!--- <a href="SPYFW.html">SPY</a> ---->
+            <!--- <a href="Zer0FW.html">Zer0</a> ---->
+            <!--- <a href="Arch475CEX.html">ArchCFW</a> ---->
+            <!--- <a href="Arch475CEXNoBD.html">ArchNo-BD</a> ---->
+            <!--- <a href="PS3ITA475DEX.html">PS3ITA</a> ---->
         </div>
     </div>
-</body>
-</html>
+
+    <!-- HFW Section -->
+    <hr style="border: 1px solid #555; margin: 30px 0;">
+    <h2 style="color:#ffcc00;">Hybrid Firmware (HFW)</h2>
+    <div class="dropdown">
+        <button class="dropbtn">Select HFW Version</button>
+        <div class="dropdown-content">
+            <a href="">4.91 HFW (ISN'T FINISHED)</a>
+            <a href="">4.90 HFW (ISN'T FINISHED)</a>
+            <a href="https://archive.org/download/ps3-hfws/4.89.1/PS3UPDAT.PUP">4.89.1 HFW</a>
+            <a href="https://archive.org/download/ps3-hfws/4.88.1/PS3UPDAT.PUP">4.88.1 HFW</a>
+            <a href="https://archive.org/download/ps3-hfws/4.87.1/PS3UPDAT.PUP">4.87.1 HFW</a>
+            <a href="https://archive.org/download/ps3-hfws/4.86.1/PS3UPDAT.PUP">4.86.1 HFW</a>
+            <a href="https://archive.org/download/ps3-hfws/4.85.1/PS3UPDAT.PUP">4.85.1 HFW</a>
+            <a href="https://archive.org/download/ps3-hfws/4.84.2/PS3UPDAT.PUP">4.84.2 HFW</a>
+            <a href="https://archive.org/download/ps3-hfws/4.84.1/PS3UPDAT.PUP">4.84.1 HFW</a>
+        </div>
+    </div>
+
+    <!-- OFW Section -->
+    <hr style="border: 1px solid #555; margin: 30px 0;">
+    <h2 style="color:#ffcc00;">Official Firmware (OFW)</h2>
+    <div class="dropdown">
+        <button class="dropbtn">Select OFW Version</button>
+        <div class="dropdown-content">
+            <a href="https://archive.org/download/ps3-official-firmwares/Firmware%204.91/PS3UPDAT.PUP">4.91 OFW</a>
+            <a href="https://archive.org/download/ps3-official-firmwares/Firmware%204.46/PS3UPDAT.PUP">4.46 OFW</a>
+            <a href="https://archive.org/download/ps3-official-firmwares/Firmware%203.66/PS3UPDAT.PUP">3.66 OFW</a>
+            <a href="https://archive.org/download/ps3-official-firmwares/Firmware%203.01/PS3UPDAT.PUP">3.01 OFW</a>
+            <a href="https://archive.org/download/ps3-official-firmwares/Firmware%202.01/PS3UPDAT.PUP">2.01 OFW</a>
+            <a href="https://archive.org/download/ps3-official-firmwares/Firmware%201.02/PS3UPDAT.PUP">1.02 OFW</a>
+        </div>
+    </div>
+</div>
