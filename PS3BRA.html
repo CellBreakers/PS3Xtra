@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<!--
+  PS3 Brick Risk Analyzer (TML/HTML single-file)
+  - Designed to work in the PS3's NetFront browser (ES3-era JavaScript)
+  - No external libraries, no modern JS, no CSS frameworks
+  - Use basic DOM APIs and inline handlers for max compatibility
+  - You can save this as .html or .tml and host it on your page
+-->
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PS3 Brick Risk Analyzer</title>
+  <style type="text/css">
+    body { font-family: Arial, Helvetica, sans-serif; background:#0b0b0b; color:#eaeaea; margin:0; padding:12px; }
+    .card { background:#151515; border:1px solid #2a2a2a; border-radius:10px; padding:12px; margin:8px 0; }
+    h1 { font-size:18px; margin:6px 0 10px; }
+    h2 { font-size:15px; margin:8px 0; }
+    label { display:block; font-size:13px; margin:6px 0 4px; }
+    select, input[type="text"], button { width:100%; padding:8px; font-size:13px; border-radius:8px; border:1px solid #3a3a3a; background:#111; color:#eaeaea; }
+    button { cursor:pointer; }
+    .row { display:block; }
+    .muted { color:#bdbdbd; font-size:12px; }
+    .pill { display:inline-block; padding:4px 8px; border-radius:999px; font-weight:bold; font-size:12px; margin-right:6px; border:1px solid #333; }
+    .risk-none { background:#163d16; color:#b8f3b8; }
+    .risk-low { background:#1b2e42; color:#b8dcff; }
+    .risk-med { background:#3a2b14; color:#ffd8a8; }
+    .risk-high { background:#402020; color:#ffb8b8; }
+    .risk-vhigh { background:#4a1212; color:#ff9c9c; }
+    .kv { font-size:12px; }
+    .kv b { color:#9ad1ff; }
+    .tips li { margin:4px 0; }
+    .footer { font-size:11px; opacity:0.85; }
+    .grid { display:block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>PS3 Brick Risk Analyzer</h1>
+    <div class="muted">Offline, client‑side tool. Results are heuristic only; always follow trusted guides.</div>
+  </div>
+
+  <div class="card">
+    <h2>1) Console & Firmware</h2>
+    <label for="model">Console Model</label>
+    <select id="model">
+      <option value="">Select...</option>
+      <option value="cecha">CECHA/B/C/E (60/20GB, NAND)</option>
+      <option value="cechg">CECHG (40GB, NAND)</option>
+      <option value="cechh">CECHH/J/K (40/80GB, NOR)</option>
+      <option value="cechl">CECHL/P/Q/R (80/160GB, NOR)</option>
+      <option value="2xxx">Slim 20xx/21xx (NOR)</option>
+      <option value="25xx">Slim 25xx (varies, check minver)</option>
+      <option value="3xxx">Slim 3xxx (HEN only)</option>
+      <option value="4xxx">Super Slim 4xxx (HEN only)</option>
+    </select>
+
+    <label for="minver">MinVerChk Result</label>
+    <select id="minver">
+      <option value="">Select...</option>
+      <option value="3.20">3.20 or lower</option>
+      <option value="3.30">3.30</option>
+      <option value="3.40">3.40</option>
+      <option value="3.50">3.50</option>
+      <option value="3.55">3.55</option>
+      <option value="3.56">3.56</option>
+      <option value="3.60">3.60</option>
+      <option value="3.66">3.66–4.20</option>
+      <option value="4.21">4.21–4.82</option>
+      <option value="4.83">4.83–4.84</option>
+      <option value="4.85">4.85–4.90+</option>
+    </select>
+
+    <label for="curfw">Current System Firmware</label>
+    <select id="curfw">
+      <option value="">Select...</option>
+      <option value="4.92">4.92</option>
+      <option value="4.91">4.91</option>
+      <option value="4.90">4.90</option>
+      <option value="4.89">4.89</option>
+      <option value="4.88">4.88</option>
+      <option value="4.87">4.87</option>
+      <option value="4.86">4.86</option>
+      <option value="4.85">4.85</option>
+      <option value="4.84">4.84</option>
+      <option value="4.82">4.82</option>
+      <option value="4.80">≤4.80</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h2>2) Planned Action</h2>
+    <label for="action">What do you want to do?</label>
+    <select id="action">
+      <option value="">Select...</option>
+      <option value="cfw">Install CFW (e.g., 4.xx CEX)</option>
+      <option value="hen">Install/Use HEN (HFW + HEN)</option>
+      <option value="downgrade">Downgrade Firmware</option>
+      <option value="flash">Patch/Write NOR/NAND (software)</option>
+      <option value="toggleqa">Toggle QA / set FSM</option>
+    </select>
+
+    <label for="safety">Safety Aids</label>
+    <select id="safety">
+      <option value="none">No hardware flasher</option>
+      <option value="flasher">Have hardware flasher (E3/Teensy/ProgSkeet)</option>
+      <option value="valid-dump">I have validated NOR/NAND dump(s)</option>
+      <option value="flasher+dump">Flasher + validated dump(s)</option>
+    </select>
+
+    <label for="flags">Extra Conditions</label>
+    <select id="flags">
+      <option value="none">None/Unknown</option>
+      <option value="ros">ROS hashes verified</option>
+      <option value="bad">Bad blocks/sectors suspected</option>
+      <option value="no-battery">CMOS/RTC battery weak</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h2>3) Analyze</h2>
+    <button onclick="analyze()">Run Risk Analysis</button>
+    <div id="result" style="margin-top:10px;"></div>
+  </div>
+
+  <div class="card">
+    <h2>Tips</h2>
+    <ul class="tips">
+      <li>3xxx/4xxx models cannot install CFW. Use <b>HFW + HEN</b> only.</li>
+      <li>On 25xx, CFW depends on <b>MinVerChk ≤ 3.56</b>. If higher, CFW is unsafe.</li>
+      <li>Always validate NOR/NAND dumps (size, ROS0/ROS1 hashes, metldr/bootldr intact).</li>
+      <li>Use stable power, wired network, and avoid theme plugins during flashing.</li>
+      <li>When unsure, stop and re-check guides from trusted sources.</li>
+    </ul>
+  </div>
+
+  <div class="card footer">
+    Heuristic only. No warranty. You are responsible for your own console.
+  </div>
+
+<script type="text/javascript">
+  function text(el, s) { el.innerHTML = s; }
+
+  function badge(label, cls) {
+    return '<span class="pill ' + cls + '">' + label + '</span>';
+  }
+
+  function kv(k, v) {
+    return '<div class="kv"><b>' + k + ':</b> ' + v + '</div>';
+  }
+
+  function analyze() {
+    var model = document.getElementById('model').value;
+    var minver = document.getElementById('minver').value;
+    var curfw = document.getElementById('curfw').value;
+    var action = document.getElementById('action').value;
+    var safety = document.getElementById('safety').value;
+    var flags = document.getElementById('flags').value;
+
+    var risk = 'unknown';
+    var reason = [];
+
+    if (!model || !minver || !curfw || !action) {
+      text(document.getElementById('result'), '<div class="muted">Please fill all dropdowns and press Analyze.</div>');
+      return;
+    }
+
+    // Base rules
+    var isFatNAND = (model === 'cecha' || model === 'cechg');
+    var is3k4k = (model === '3xxx' || model === '4xxx');
+    var is25xx = (model === '25xx');
+
+    // Default baseline per action
+    if (action === 'hen') {
+      if (is3k4k) {
+        risk = 'low';
+        reason.push('HEN on 3xxx/4xxx is the intended path.');
+      } else {
+        risk = 'low';
+        reason.push('HEN is generally low risk versus CFW flashing.');
+      }
+    } else if (action === 'cfw') {
+      if (is3k4k) {
+        risk = 'vhigh';
+        reason.push('3xxx/4xxx cannot install CFW. Proceeding risks permanent brick.');
+      } else if (is25xx) {
+        // 25xx depends on minver
+        if (parseFloat(minver) <= 3.56 || minver === '3.56' || minver === '3.55' || minver === '3.50' || minver === '3.40' || minver === '3.30' || minver === '3.20') {
+          risk = 'med';
+          reason.push('25xx with MinVer ≤ 3.56 can take CFW with care.');
+        } else {
+          risk = 'high';
+          reason.push('25xx with MinVer > 3.56 not recommended for CFW.');
+        }
+      } else {
+        // Fat/Slim 2xxx with proper minver are generally okay
+        risk = isFatNAND ? 'med' : 'med';
+        if (isFatNAND) reason.push('NAND models are less forgiving; validate dumps.');
+        else reason.push('NOR models are safer but still require validated dumps.');
+      }
+    } else if (action === 'downgrade') {
+      if (is3k4k) {
+        risk = 'vhigh';
+        reason.push('3xxx/4xxx cannot be safely downgraded to CFW levels.');
+      } else if (is25xx) {
+        if (parseFloat(minver) <= 3.56) { risk = 'high'; reason.push('25xx downgrade possible but risky; strict checks required.'); }
+        else { risk = 'vhigh'; reason.push('25xx with MinVer > 3.56 downgrade is unsafe.'); }
+      } else {
+        risk = isFatNAND ? 'high' : 'med';
+        reason.push('Downgrading increases brick risk compared to same-version flash.');
+      }
+    } else if (action === 'flash') {
+      risk = isFatNAND ? 'high' : 'med';
+      reason.push('Direct NOR/NAND writes carry inherent risk.');
+    } else if (action === 'toggleqa') {
+      risk = 'low';
+      reason.push('QA flag operations are typically low risk when prerequisites are met.');
+    }
+
+    // Adjustments from minver vs current firmware
+    var cur = parseFloat(curfw);
+    var mv = parseFloat(minver);
+    if (action === 'cfw' || action === 'downgrade') {
+      if (!isNaN(mv) && !isNaN(cur)) {
+        if (cur < 3.55) { reason.push('Very old firmware – follow legacy steps.'); }
+        if (mv > 3.56 && (action === 'cfw' || action === 'downgrade')) {
+          risk = (risk === 'vhigh') ? 'vhigh' : 'high';
+          reason.push('MinVer > 3.56 limits CFW/downgrade paths.');
+        }
+      }
+    }
+
+    // Safety aids effect
+    if (safety === 'flasher') { reason.push('Hardware flasher can help recover from soft bricks.'); risk = bumpDown(risk); }
+    if (safety === 'valid-dump') { reason.push('Validated dump reduces unknowns.'); risk = bumpDown(risk); }
+    if (safety === 'flasher+dump') { reason.push('Flasher + validated dump significantly lowers risk.'); risk = bumpDown(bumpDown(risk)); }
+
+    // Flags impact
+    if (flags === 'ros') { reason.push('ROS hashes verified.'); risk = bumpDown(risk); }
+    if (flags === 'bad') { reason.push('Bad blocks/sectors suspected.'); risk = bumpUp(risk); }
+    if (flags === 'no-battery') { reason.push('Weak RTC battery can cause odd behavior during updates.'); risk = bumpUp(risk); }
+
+    // Render
+    var badgeHtml = riskBadge(risk);
+    var summary = ''
+      + kv('Model', document.getElementById('model').options[document.getElementById('model').selectedIndex].text)
+      + kv('MinVerChk', document.getElementById('minver').options[document.getElementById('minver').selectedIndex].text)
+      + kv('Current FW', document.getElementById('curfw').options[document.getElementById('curfw').selectedIndex].text)
+      + kv('Action', document.getElementById('action').options[document.getElementById('action').selectedIndex].text)
+      + kv('Safety', document.getElementById('safety').options[document.getElementById('safety').selectedIndex].text)
+      + kv('Extras', document.getElementById('flags').options[document.getElementById('flags').selectedIndex].text);
+
+    var notes = '<ul>';
+    var i;
+    for (i = 0; i < reason.length; i++) { notes += '<li>' + reason[i] + '</li>'; }
+    notes += '</ul>';
+
+    text(document.getElementById('result'),
+      badgeHtml + summary + '<div>' + notes + '</div>' + guidance(risk, model, action, minver)
+    );
+  }
+
+  function riskBadge(r) {
+    if (r === 'none') return badge('No Apparent Brick Risk', 'risk-none');
+    if (r === 'low') return badge('Low Risk', 'risk-low');
+    if (r === 'med') return badge('Moderate Risk', 'risk-med');
+    if (r === 'high') return badge('High Risk', 'risk-high');
+    if (r === 'vhigh') return badge('VERY HIGH RISK', 'risk-vhigh');
+    return badge('Unknown Risk', 'risk-med');
+  }
+
+  function bumpDown(r) {
+    if (r === 'vhigh') return 'high';
+    if (r === 'high') return 'med';
+    if (r === 'med') return 'low';
+    return r;
+  }
+
+  function bumpUp(r) {
+    if (r === 'low') return 'med';
+    if (r === 'med') return 'high';
+    if (r === 'high') return 'vhigh';
+    return r;
+  }
+
+  function guidance(risk, model, action, minver) {
+    var g = '<div class="muted" style="margin-top:8px;">Recommended next steps:</div><ol class="kv">';
+
+    if (action === 'hen') {
+      g += '<li>Use HFW compatible with your current OFW and install HEN via PS3 browser entrypoint.</li>';
+      g += '<li>Avoid restoring backups during install; reboot cleanly after HEN setup.</li>';
+    } else if (action === 'cfw') {
+      if (model === '3xxx' || model === '4xxx') {
+        g += '<li>Do <b>NOT</b> attempt CFW on 3xxx/4xxx. Use HEN instead.</li>';
+      } else if (model === '25xx' && parseFloat(minver) > 3.56) {
+        g += '<li>25xx with MinVer > 3.56 should avoid CFW. Consider HEN or stay stock.</li>';
+      } else {
+        g += '<li>Run MinVerChk again and keep the screenshot/result.</li>';
+        g += '<li>Make and validate multiple NOR/NAND dumps (hashes match, ROS0/ROS1). Keep backups safe.</li>';
+        g += '<li>Use a well-known CFW PUP matching your target version; verify file hash.</li>';
+      }
+    } else if (action === 'downgrade') {
+      g += '<li>Prefer hardware flasher and validated dumps before any downgrade steps.</li>';
+      g += '<li>Follow a model-specific guide. Never skip QA toggle / FSM prerequisites.</li>';
+    } else if (action === 'flash') {
+      g += '<li>Verify patchset and offsets for your exact model/bootloader combination.</li>';
+      g += '<li>Keep a power-stable environment. Do not interrupt writes.</li>';
+    } else if (action === 'toggleqa') {
+      g += '<li>Ensure you are on a compatible firmware for QA toggling steps.</li>';
+    }
+
+    g += '</ol>';
+    return g;
+  }
+</script>
+</body>
+</html>

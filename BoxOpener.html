@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PS3 Scene Box</title>
+<style>
+body { font-family:Arial; background:#111; color:#fff; text-align:center; }
+.box { margin-top:50px; padding:20px; background:#222; border-radius:10px; display:inline-block; }
+button { padding:10px 20px; font-size:18px; }
+.reward { margin-top:20px; font-size:18px; }
+.common { color:gray; }
+.uncommon { color:green; }
+.rare { color:blue; }
+.epic { color:purple; }
+.legendary { color:orange; }
+a { color:inherit; text-decoration:underline; }
+</style>
+</head>
+<body>
+<h1>🎁 PS3 Scene Box</h1>
+<div class="box">
+  <p>Open one mystery box every 24 hours!</p>
+  <button onclick="openBox()">Open Box</button>
+  <div id="result" class="reward"></div>
+</div>
+<script>
+var rewards = {
+  common: [
+    {name:"Simple Theme", link:"/downloads/simple_theme.pkg"},
+    {name:"Retro Game ROM", link:"/downloads/retro_game.zip"},
+    {name:"Wallpaper Pack", link:"/downloads/wallpapers.zip"}
+  ],
+  uncommon: [
+    {name:"PS3 Modding Guide", link:"/downloads/modding_guide.pdf"},
+    {name:"Custom XMB Icons", link:"/downloads/xmb_icons.zip"},
+    {name:"Hidden Easter Egg Link", link:"/downloads/easter_egg.html"}
+  ],
+  rare: [
+    {name:"Mod Tool PKG", link:"/downloads/mod_tool.pkg"},
+    {name:"Rare Theme Collection", link:"/downloads/rare_themes.zip"},
+    {name:"Source Code Snippet", link:"/downloads/source_snippet.txt"}
+  ],
+  epic: [
+    {name:"Exclusive Mod Menu", link:"/downloads/mod_menu.pkg"},
+    {name:"Beta Tool Leak", link:"/downloads/beta_tool.pkg"},
+    {name:"High-Quality Modding Assets", link:"/downloads/modding_assets.zip"}
+  ],
+  legendary: [
+    {name:"Secret Dev PKG", link:"/downloads/dev_pkg.pkg"},
+    {name:"Unreleased Game Build", link:"/downloads/unreleased_build.pkg"},
+    {name:"Full Source Leak", link:"/downloads/full_source.zip"}
+  ]
+};
+var odds = {common:50, uncommon:25, rare:15, epic:7, legendary:3};
+
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+function setCookie(name, value, days) {
+  var date = new Date();
+  date.setTime(date.getTime() + (days*24*60*60*1000));
+  document.cookie = name + "=" + value + "; path=/";
+}
+function canOpen() {
+  var last = getCookie("lastOpenTime");
+  if (!last) return true;
+  var now = new Date().getTime();
+  return (now - parseInt(last,10)) >= 86400000;
+}
+function openBox() {
+  if (!canOpen()) {
+    var last = parseInt(getCookie("lastOpenTime"),10);
+    var remaining = 86400000 - (new Date().getTime() - last);
+    var hours = Math.floor(remaining/3600000);
+    var mins = Math.floor((remaining%3600000)/60000);
+    document.getElementById("result").innerHTML = "⏳ Come back in "+hours+"h "+mins+"m";
+    return;
+  }
+  setCookie("lastOpenTime", new Date().getTime(), 365);
+  var roll = Math.random()*100, cumulative = 0, tier;
+  for (var key in odds) {
+    cumulative += odds[key];
+    if (roll <= cumulative) { tier = key; break; }
+  }
+  var reward = rewards[tier][Math.floor(Math.random()*rewards[tier].length)];
+  document.getElementById("result").innerHTML = 
+    "🎉 You got: <span class='"+tier+"'><a href='"+reward.link+"'>"+reward.name+" ["+tier.toUpperCase()+"]</a></span>";
+}
+</script>
+</body>
+</html>
