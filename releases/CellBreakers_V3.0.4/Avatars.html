@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PS3 Avatars</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { display: block; }
+        .avatar { margin: 10px; display: block; }
+        img { width: 100px; height: 100px; }
+    </style>
+</head>
+<body>
+    <h1>PS3 Avatars</h1>
+    <div class="container" id="avatarsContainer"></div>
+
+    <script>
+        var iconsRepo = 'https://raw.githubusercontent.com/PPPWnedPS3Dev/PS3AvatarsIcons.mirror/main/';
+        var avatarsRepo = 'https://raw.githubusercontent.com/PPPWnedPS3Dev/PS3Avatars.mirror/main/';
+        
+        function fetchAvatars() {
+            var container = document.getElementById('avatarsContainer');
+            
+            for (var i = 1; i <= 1010; i++) { // Adjusted upper range
+                var id = (8000000000 + i).toString(); // Generates correct ID format
+                var iconUrl = iconsRepo + 'TA9000-NPTA00001_00-AVATAR' + id + '-AE.png';
+                var pkgUrl = avatarsRepo + 'TA9000-NPTA00001_00-AVATAR' + id + '-AE.pkg';
+                
+                var div = document.createElement('div');
+                div.className = 'avatar';
+                div.innerHTML = '<img src="' + iconUrl + '" alt="Avatar ' + i + '" onerror="this.style.display=\'none\'"><br>' +
+                                '<a href="' + pkgUrl + '" download>Download Avatar ' + i + '</a>';
+                container.appendChild(div);
+            }
+        }
+        
+        fetchAvatars();
+    </script>
+</body>
+</html>
