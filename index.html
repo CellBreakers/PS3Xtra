@@ -8,127 +8,147 @@
         body {
             margin: 0;
             font-family: "Verdana", sans-serif;
-            background-color: #2c2f33;
-            color: #ffffff;
             line-height: 1.6;
         }
 
-        header {
+        /* ===== THEME: DEFAULT ===== */
+        body.default {
+            background-color: #2c2f33;
+            color: #ffffff;
+        }
+        body.default header {
             background-color: #23272a;
-            padding: 10px;
-            text-align: center;
             border-bottom: 4px solid #7289da;
         }
-
-        header h1 {
-            font-size: 2.2em;
-            color: #7289da;
-            margin: 5px 0;
-        }
-
-        nav {
-            padding: 10px;
-            text-align: center;
-            background-color: #2c2f33;
-        }
-
-        nav a {
-            color: #7289da;
-            text-decoration: none;
-            font-size: 1.1em;
-            margin: 0 15px;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .content {
-            text-align: center;
-            padding: 30px 20px;
-        }
-
-        .content h2 {
-            color: #7289da;
-            margin-bottom: 20px;
-        }
-
-        .content p {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-
-        .warning {
-            background-color: #e74c3c;
-            color: #ffffff;
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 1em;
-            margin-bottom: 20px;
-        }
-
-        .buttons {
-            margin: 20px 0;
-        }
-
-        .buttons a {
-            display: inline-block;
+        body.default header h1 { color: #7289da; }
+        body.default nav a { color: #7289da; }
+        body.default .content h2 { color: #7289da; }
+        body.default .buttons a {
             background-color: #7289da;
-            color: #ffffff;
-            padding: 10px 15px;
-            margin: 5px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 1.1em;
+            color: #fff;
         }
-
-        .buttons a:hover {
-            background-color: #5865f2;
-        }
-
-        footer {
+        body.default .buttons a:hover { background-color: #5865f2; }
+        body.default footer {
             background-color: #23272a;
-            text-align: center; /* Center content inside the footer */
-            padding: 10px;
-            margin-top: 30px;
             border-top: 4px solid #7289da;
         }
 
-        footer p {
-            font-size: 0.9em;
-            margin: 5px 0;
+        /* ===== THEME: OG RETRO ===== */
+        body.og {
+            background-color: #c0c0c0;
+            color: #000;
+        }
+        body.og header {
+            background-color: #808080;
+            border-bottom: 3px solid #000;
+        }
+        body.og header h1 { color: #000; }
+        body.og nav a { color: #000; }
+        body.og .content h2 { color: #000; }
+        body.og .buttons a {
+            background-color: #e0e0e0;
+            border: 1px solid #000;
+            color: #000;
+        }
+        body.og .buttons a:hover { background-color: #b0b0b0; }
+        body.og footer {
+            background-color: #808080;
+            border-top: 3px solid #000;
         }
 
-        footer .logo-link img,
-        footer .x-link img {
-            display: block; /* Makes the image behave as a block-level element */
-            margin: 10px auto; /* Horizontally centers the image */
-            max-width: 120px;
-            transition: transform 0.3s;
+        /* ===== THEME: DARK MINIMAL ===== */
+        body.dark {
+            background-color: #000;
+            color: #aaa;
+        }
+        body.dark header {
+            background-color: #111;
+            border-bottom: 2px solid #333;
+        }
+        body.dark header h1 { color: #aaa; }
+        body.dark nav a { color: #0af; }
+        body.dark .content h2 { color: #aaa; }
+        body.dark .buttons a {
+            background: none;
+            color: #0af;
+            text-decoration: underline;
+        }
+        body.dark .buttons a:hover { color: #08f; }
+        body.dark footer {
+            background-color: #111;
+            border-top: 2px solid #333;
         }
 
-        footer .logo-link img:hover,
-        footer .x-link img:hover {
-            transform: scale(1.1);
+        /* ===== THEME: LIGHT ===== */
+        body.light {
+            background-color: #fff;
+            color: #000;
+        }
+        body.light header {
+            background-color: #ddd;
+            border-bottom: 3px solid #000;
+        }
+        body.light header h1 { color: #000; }
+        body.light nav a { color: #000; }
+        body.light .content h2 { color: #000; }
+        body.light .buttons a {
+            background-color: #ddd;
+            border: 1px solid #333;
+            color: #000;
+        }
+        body.light .buttons a:hover { background-color: #bbb; }
+        body.light footer {
+            background-color: #ddd;
+            border-top: 3px solid #000;
         }
 
-        @media (max-width: 600px) {
-            .buttons a {
-                display: block;
-                margin: 10px auto;
-                width: 90%;
-            }
+        /* ===== THEME: PS3 XMB ===== */
+        body.ps3 {
+            background: linear-gradient(to bottom, #001133, #000);
+            color: #fff;
         }
+        body.ps3 header {
+            background-color: #001f4d;
+            border-bottom: 3px solid #0077ff;
+        }
+        body.ps3 header h1 { color: #fff; }
+        body.ps3 nav a { color: #66aaff; }
+        body.ps3 .content h2 { color: #66aaff; }
+        body.ps3 .buttons a {
+            background-color: #003366;
+            border: 1px solid #666;
+            border-radius: 6px;
+            color: #fff;
+        }
+        body.ps3 .buttons a:hover { background-color: #0055aa; }
+        body.ps3 footer {
+            background-color: #001f4d;
+            border-top: 3px solid #0077ff;
+        }
+
+        /* Shared Styles */
+        header { padding: 10px; text-align: center; }
+        header h1 { font-size: 2.2em; margin: 5px 0; }
+        nav { padding: 10px; text-align: center; }
+        nav a { text-decoration: none; font-size: 1.1em; margin: 0 15px; font-weight: bold; }
+        nav a:hover { text-decoration: underline; }
+        .content { text-align: center; padding: 30px 20px; }
+        .content p { font-size: 1.1em; margin-bottom: 20px; }
+        .warning { background-color: #e74c3c; color: #fff; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        .buttons { margin: 20px 0; }
+        .buttons a { display: inline-block; padding: 10px 15px; margin: 5px; text-decoration: none; border-radius: 5px; font-size: 1.1em; }
+        footer { text-align: center; padding: 10px; margin-top: 30px; }
+        footer p { font-size: 0.9em; margin: 5px 0; }
     </style>
 </head>
-<body>
+<body class="default">
     <header>
         <h1>CellBreakers</h1>
     </header>
 
     <div class="content">
-	    <h3>DESKTOP VERSION IS COMING SOON!</h3>
+        <h3>DESKTOP VERSION IS COMING SOON!</h3>
+		<h3>COMMUNITY TAB IS ONLY TEMPORARY FOR TESTING PURPOSES!</h3>
         <h2>Welcome to CellBreakers's Official Website!</h2>
         <p>Any other website except for the ones listed below are not ours and are impersonating us.</p>
         <p>Here you can see our creations made specifically for PS3 systems! Launch this website on your PS3 browser and pick from the tools below!</p>
@@ -139,16 +159,25 @@
 
         <div class="buttons">
             <a href="PS3Toolbox.html" title="Launch PS3Toolbox">PS3Toolbox</a>
-			<a href="BoxOpener.html">Start PS3 Box Opener</a>
             <a href="cogwheel.html">Start CogWheel</a>
             <a href="PS3GameLoader.html">Start PS3GameLoader</a>
-			<a href="downloadCBBeta.html">Download CellBreakers 0.2.1!</a>
-			<p style="color: red;">Warning: This version is for >4.87 only. Do NOT use <4.87!</p>
+            <a href="l.html">PS3 FW Detector</a>
+			<a href="Community.html">Community</a>
+			<a href="Archive.html">Archive of CB</a>
+            <p style="color: red;">Warning: This version is for >4.87 only. Do NOT use &lt;4.87!</p>
         </div>
+
+        <!-- Theme Selector -->
+        <p style="margin-top:20px;">
+            Theme:
+            <select onchange="document.body.className=this.value;">
+                <option value="default">Default</option>
+                <option value="og">OG Retro</option>
+                <option value="dark">Dark Minimal</option>
+                <option value="light">Light</option>
+                <option value="ps3">PS3 XMB</option>
+            </select>
+        </p>
     </div>
 </body>
 </html>
-
-
-
-

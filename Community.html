@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CellBreakers Community</title>
+  <style>
+    /* Body and Fonts */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1f1f1f, #121212);
+      color: #e0e0e0;
+    }
+
+    /* Header */
+    header {
+      background-color: #1e1e1e;
+      padding: 1em;
+      text-align: center;
+      font-size: 1.7em;
+      font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    /* Main Content */
+    main {
+      max-width: 900px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+
+    /* Unsupported devices */
+    #unsupported {
+      display: none;
+      text-align: center;
+      margin-top: 2em;
+      color: #ff4444;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1em;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>CellBreakers Community</header>
+  
+  <!-- Desktop-only content -->
+  <main id="desktopContent">
+    <!-- Giscus discussion container -->
+    <div id="giscus-container">
+      <!-- Giscus will automatically embed here -->
+      <p>Loading community discussion...</p>
+    </div>
+  </main>
+
+  <!-- Unsupported message for mobiles / PS3 -->
+  <div id="unsupported">Community is available on desktops and laptops only.</div>
+
+  <footer>© 2025 CellBreakers</footer>
+
+  <script>
+    // Detect mobile devices
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod|PlayStation/i.test(navigator.userAgent);
+    const desktopContent = document.getElementById('desktopContent');
+    const unsupported = document.getElementById('unsupported');
+
+    if(isMobile){
+      desktopContent.style.display = 'none';
+      unsupported.style.display = 'block';
+    }
+  </script>
+
+  <!-- Giscus embed script -->
+    <script src="https://giscus.app/client.js"
+        data-repo="CellBreakers/PS3Xtra"
+        data-repo-id="R_kgDONcaF8Q"
+        data-category="General"
+        data-category-id="DIC_kwDONcaF8c4Cuwdf"
+        data-mapping="title"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="dark_high_contrast"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+    </script>
+</body>
+</html>
